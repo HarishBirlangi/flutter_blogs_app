@@ -95,16 +95,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget loginSection() {
     return Column(children: [
       ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           final form = _formKey.currentState;
           if (form!.validate()) {
             form.save();
           }
           print('Email: $email');
           print('Password: $password');
-          AuthImplementation().userLoginUsingFirebase(email, password);
-          Navigator.of(context)
-              .pushReplacementNamed(Routes().blogsHomePageRoute);
+          await AuthImplementation()
+              .userLoginUsingFirebase(context, email, password);
+          if (AuthImplementation().getCurrentUser() != null) {
+            Navigator.of(context)
+                .pushReplacementNamed(Routes().blogsHomePageRoute);
+          }
         },
         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
         child: const Text('Login', style: TextStyle(color: Colors.white)),
@@ -123,14 +126,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget registerSection() {
     return Column(children: [
       ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           final form = _formKey.currentState;
           if (form!.validate()) {
             form.save();
           }
           print('Email: $email');
           print('Password: $password');
-          AuthImplementation().userRegistrationUsingFirebase(email, password);
+          await AuthImplementation()
+              .userRegistrationUsingFirebase(context, email, password);
+          if (AuthImplementation().getCurrentUser() != null) {
+            Navigator.of(context)
+                .pushReplacementNamed(Routes().blogsHomePageRoute);
+          }
         },
         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
         child:

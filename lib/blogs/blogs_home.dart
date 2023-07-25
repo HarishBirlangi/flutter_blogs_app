@@ -11,13 +11,13 @@ class BlogsHomePage extends StatefulWidget {
 }
 
 class _BlogsHomePageState extends State<BlogsHomePage> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Blogs')),
-      body: const Center(
-        child: Text('Blogs page'),
+      body: Center(
+        child: Text(AuthImplementation().getCurrentUser().toString()),
       ),
       bottomNavigationBar: _bottomNavigationBar(),
     );
@@ -26,26 +26,28 @@ class _BlogsHomePageState extends State<BlogsHomePage> {
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add new blog"),
+        BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
       ],
       backgroundColor: Colors.blueAccent,
       selectedItemColor: Colors.white,
       currentIndex: _selectedIndex,
       onTap: (index) {
+        setState(() {
+          _selectedIndex = index;
+        });
         switch (index) {
           case 0:
-            setState(() {
-              _selectedIndex = index;
-            });
+            Navigator.of(context).pushNamed(Routes().blogsHomePageRoute);
+            break;
+          case 1:
+            Navigator.of(context).pushNamed(Routes().addNewBlogPageRoute);
+            break;
+          case 2:
             AuthImplementation().signOutUser();
             Navigator.of(context).pushNamedAndRemoveUntil(
                 Routes().loginPageRoute, (route) => false);
-            break;
-          case 1:
-            setState(() {
-              _selectedIndex = index;
-            });
             break;
         }
       },

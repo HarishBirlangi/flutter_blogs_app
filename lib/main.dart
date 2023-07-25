@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blogs_app/authentication/firebase_authentication.dart';
 import 'package:flutter_blogs_app/authentication/user_login_page.dart';
+import 'package:flutter_blogs_app/blogs/add_new_blog_page.dart';
 import 'package:flutter_blogs_app/blogs/blogs_home.dart';
 import 'package:flutter_blogs_app/common_files/constants.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes().loginPageRoute: (context) => const LoginPage(),
         Routes().blogsHomePageRoute: (context) => const BlogsHomePage(),
+        Routes().addNewBlogPageRoute: (context) => const AddNewBlogPage(),
       },
       debugShowCheckedModeBanner: false,
     );

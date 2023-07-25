@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_blogs_app/common_files/common_widgets.dart';
 
 class AuthImplementation {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<void> userRegistrationUsingFirebase(
-      String email, String password) async {
+      BuildContext context, String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-      print("User registration successful");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -18,26 +20,35 @@ class AuthImplementation {
     }
   }
 
-  Future<void> userLoginUsingFirebase(String email, String password) async {
+  Future<void> userLoginUsingFirebase(
+      BuildContext context, String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      print("User login successful");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        CommonWidgets().alertDialogue(context, "Error", "Wrong email");
+        print("user-not-found");
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        CommonWidgets().alertDialogue(context, "Error", "Wrong password");
+        print("Wrong password");
+      } else {
+        CommonWidgets()
+            .alertDialogue(context, "Error", "Check the credentials");
+        print("Check the credentials 1");
       }
+    } catch (e) {
+      CommonWidgets().alertDialogue(context, "Error", "Check the credentials");
+      print("Check the credentials 2");
     }
   }
 
   String? getCurrentUser() {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = _firebaseAuth.currentUser;
     return user?.uid;
   }
 
   Future<void> signOutUser() async {
-    FirebaseAuth.instance.signOut();
+    _firebaseAuth.signOut();
   }
 }
