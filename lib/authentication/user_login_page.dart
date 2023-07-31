@@ -30,63 +30,65 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('lib/assets/images/app_logo.jpeg'),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter some value";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (newValue) {
-                        email = newValue!;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your email',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: TextFormField(
-                      obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter some value";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (newValue) {
-                        password = newValue!;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your password',
-                      ),
-                    ),
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('lib/assets/images/app_logo.jpeg'),
               ),
-            ),
-            loginPageCheck ? loginSection() : registerSection()
-          ],
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter some value";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (newValue) {
+                          email = newValue!;
+                        },
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your email',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: TextFormField(
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter some value";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (newValue) {
+                          password = newValue!;
+                        },
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your password',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              loginPageCheck ? loginSection() : registerSection()
+            ],
+          ),
         ),
       ),
     );
@@ -100,8 +102,6 @@ class _LoginPageState extends State<LoginPage> {
           if (form!.validate()) {
             form.save();
           }
-          print('Email: $email');
-          print('Password: $password');
           await AuthImplementation()
               .userLoginUsingFirebase(context, email, password);
           if (AuthImplementation().getCurrentUser() != null) {
@@ -131,8 +131,6 @@ class _LoginPageState extends State<LoginPage> {
           if (form!.validate()) {
             form.save();
           }
-          print('Email: $email');
-          print('Password: $password');
           await AuthImplementation()
               .userRegistrationUsingFirebase(context, email, password);
           if (AuthImplementation().getCurrentUser() != null) {

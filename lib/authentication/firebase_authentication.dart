@@ -11,12 +11,14 @@ class AuthImplementation {
           .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        CommonWidgets().alertDialogue(
+            context, "Error", "The password provided is too weak.");
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        CommonWidgets().alertDialogue(
+            context, "Error", "The account already exists for that email.");
       }
     } catch (e) {
-      print(e);
+      CommonWidgets().alertDialogue(context, "Error", "Something went wrong");
     }
   }
 
@@ -28,18 +30,14 @@ class AuthImplementation {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         CommonWidgets().alertDialogue(context, "Error", "Wrong email");
-        print("user-not-found");
       } else if (e.code == 'wrong-password') {
         CommonWidgets().alertDialogue(context, "Error", "Wrong password");
-        print("Wrong password");
       } else {
         CommonWidgets()
             .alertDialogue(context, "Error", "Check the credentials");
-        print("Check the credentials 1");
       }
     } catch (e) {
       CommonWidgets().alertDialogue(context, "Error", "Check the credentials");
-      print("Check the credentials 2");
     }
   }
 
