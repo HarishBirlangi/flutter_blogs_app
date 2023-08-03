@@ -78,10 +78,13 @@ class _BlogsHomePageState extends State<BlogsHomePage> {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add new blog"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.wallpaper), label: "Wallpapers"),
         BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
       ],
-      backgroundColor: Colors.blueAccent,
-      selectedItemColor: Colors.white,
+      backgroundColor: Colors.lightBlue,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.blueGrey,
       currentIndex: _selectedIndex,
       onTap: (index) {
         setState(() {
@@ -95,6 +98,9 @@ class _BlogsHomePageState extends State<BlogsHomePage> {
             Navigator.of(context).pushNamed(Routes().addNewBlogPageRoute);
             break;
           case 2:
+            Navigator.of(context).pushNamed(Routes().wallpapersHomePageRoute);
+            break;
+          case 3:
             AuthImplementation().signOutUser();
             Navigator.of(context).pushNamedAndRemoveUntil(
                 Routes().loginPageRoute, (route) => false);

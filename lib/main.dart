@@ -5,6 +5,7 @@ import 'package:flutter_blogs_app/authentication/user_login_page.dart';
 import 'package:flutter_blogs_app/blogs/add_new_blog_page.dart';
 import 'package:flutter_blogs_app/blogs/blogs_home.dart';
 import 'package:flutter_blogs_app/common_files/constants.dart';
+import 'package:flutter_blogs_app/wallpapers/wallpapersHomePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
         Routes().loginPageRoute: (context) => const LoginPage(),
         Routes().blogsHomePageRoute: (context) => const BlogsHomePage(),
         Routes().addNewBlogPageRoute: (context) => const AddNewBlogPage(),
+        Routes().wallpapersHomePageRoute: (context) =>
+            const WallpapersHomePage(),
       },
       debugShowCheckedModeBanner: false,
     );
